@@ -1,0 +1,268 @@
+.new-proj-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+}
+/* Nav */
+.new-proj-nav {
+  width: 100%;
+  height: 12vh;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.new-proj-nav-logo{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.logo {
+  width: 200px; 
+  height: 100px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.logo p {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+}
+.new-proj-nav-logo svg {
+  width: 40px; 
+  height: 40px; 
+}
+.new-proj-nav-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.new-proj-nav-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-left: 15vh;
+}
+.new-proj-title {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 3vh;
+}
+.new-proj-nav-title input {
+  background-color: rgb(61, 61, 61);
+  color: white;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  padding: 3px;
+}
+.new-proj-nav-title-icon svg {
+  width: 35px; 
+  height: 35px; 
+}
+
+.new-proj-nav-title-icon:hover {
+  cursor: pointer;
+}
+.save-proj-button {
+  background-color: black;
+  color: white;
+  outline: none;
+  font-size: 1.1rem;
+  font-weight: 400;
+  border-radius: 5px;
+  padding: 4px;
+  margin-left: 3vh;
+  cursor: pointer;
+  border: #ddd 1.8px solid;
+}
+.new-proj-acc-logo {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+.new-proj-acc-logo:hover {
+  cursor: pointer;
+}
+/* code */
+.split-sash-content {
+  background-color: black;
+  padding: 8px;
+}
+.code-editor-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+}
+.html-icon {
+  min-width: min-content;
+  width: 90px;
+  height: 30px; 
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-top: 3px solid dimgrey;
+  padding: 0 15px;
+}
+
+.html-icon p {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.html-icon svg {
+  width: 23px; 
+  height: 23px; 
+}
+
+.right-tools {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.right-tools svg {
+  width: 25px; 
+  height: 25px; 
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 2px;
+}
+
+.right-tools svg:hover {
+  cursor: pointer;
+}
+
+.code-editor {
+  background-color: rgb(61, 61, 61);
+  width: 100%;
+  height: calc(100% - 5vh); 
+  overflow: auto; 
+  padding-left: 10px;
+}
+
+.output-section {
+  background-color: #282c34;
+  width: 100%;
+  height: 83vh;
+}
+
+iframe {
+  background-color: #282c34;
+  width: 100%;
+  height: 83vh;
+}
+
+.output-footer-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: black;
+  margin: 0 14px;
+}
+
+.output-footer-bar-left button {
+  background-color: rgb(61, 61, 61);
+  color: white;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.output-footer-bar-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: white;
+  margin-right: 4px;
+}
+
+/* Output */
+
+.output-footer-bar-left svg {
+  width: 25px; 
+  height: 25px; 
+  background-color: #282c34;
+  margin: 2.4px 5px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.output-footer-bar-center svg {
+  width: 25px; 
+  height: 25px; 
+  background-color: #282c34;
+  margin: 0 5px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.output-footer-bar-right svg {
+  width: 25px; 
+  height: 25px; 
+  background-color: #282c34;
+  margin: 0 5px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.output-footer-bar-right p {
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.output-iframe {
+  height: auto;
+  min-height: 83vh;
+  width: 100%;
+  border: none;
+  background-color: #282c34;
+}

@@ -1,0 +1,11 @@
+.blog-main{
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .blog-h1 {
+      font-size: 24px;
+      font-weight: 400;
+      text-align: center;
+      color: #ffffff;
+  }
