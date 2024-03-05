@@ -1,7 +1,7 @@
 import { fetchWithCredentials } from "../helper/fetchWithCredentials ";
 
 //postService.js
-const BACKEND_URL = process.env.REACT_APP_BACKEND_UR;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API_URL = `${BACKEND_URL}/api/posts/`;
 
 // create post
