@@ -3,10 +3,10 @@ import { fetchWithCredentials } from "../helper/fetchWithCredentials ";
 //postService.js
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API_URL = `${BACKEND_URL}/api/posts/`;
-console.log(API_URL);
+
 // create post
 const createPost = (post) => {
-  return fetchWithCredentials(`${API_URL}`, {
+  return fetchWithCredentials(API_URL, {
     method: 'POST',
     body: JSON.stringify(post),
   });
@@ -14,7 +14,7 @@ const createPost = (post) => {
 
 // get all posts
 const getPosts = () => {
-  return fetchWithCredentials(`${API_URL}`, {
+  return fetchWithCredentials(API_URL, {
     method: 'GET',
   });
 };
