@@ -7,7 +7,6 @@ export const fetchWithCredentialsBlog = async (url, options = {}) => {
 
   const response = await fetch(url, {
     ...options,
-        cors: "no-cors",
     headers: {
       ...headers,
       ...options.headers,

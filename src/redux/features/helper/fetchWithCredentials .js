@@ -1,7 +1,6 @@
 export const fetchWithCredentials = async (url, options) => {
   const response = await fetch(url, {
     ...options,
-    cors: "no-cors",
     headers: {
       "Content-Type": "application/json",
       ...options.headers,
