@@ -4,7 +4,7 @@ import "./BlogCard.css";
 import { useDeleteBlogPost } from "../../customHooks/useDeleteBlogPost";
 import { Link } from "react-router-dom";
 import { useAuthAdminStatus } from "../../../customHooks/useAuthAdminStatus";
-import { shortenText } from "../../../auth/pages/profile/Profile";
+import { shortenText } from "../../../customHooks/shortenText";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleLike } from "../../../../redux/features/blog/blogSlice";
 import { ReactComponent as Like } from "../../assets/icons/like-icon.svg";

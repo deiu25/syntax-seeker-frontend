@@ -10,12 +10,11 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-   // Sidebar component
-const handleChangeTheme = (theme) => {
-  dispatch(updateTheme({ theme }));
-  document.body.className = theme;
-};
-
+   const handleChangeTheme = (theme) => {
+    localStorage.setItem('theme', theme);
+    dispatch(updateTheme({ theme }));
+    document.body.className = theme;
+  };
 
   const sidebarClass = classNames({
     "col-md-3": isSidebarOpen,
