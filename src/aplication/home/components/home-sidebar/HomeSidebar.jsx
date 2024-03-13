@@ -2,15 +2,23 @@ import React from "react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowOnLogin, ShowOnLogout } from "../../../auth/components/protect/hiddenLink";
+import {
+  ShowOnLogin,
+  ShowOnLogout,
+} from "../../../auth/components/protect/hiddenLink";
 import { updateTheme } from "../../../../redux/features/auth/authSlice";
 
-export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSidebar }) => {
+export const HomeSidebar = ({
+  onTabChange,
+  currentTab,
+  isSidebarOpen,
+  toggleSidebar,
+}) => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-   const handleChangeTheme = (theme) => {
+  const handleChangeTheme = (theme) => {
     localStorage.setItem('theme', theme);
     dispatch(updateTheme({ theme }));
     document.body.className = theme;
@@ -45,90 +53,94 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           onClick={toggleSidebar}
         />
       )}
-      <ShowOnLogout>
-        <button
-          className="nav-link anchor-btn"
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          <i className="far fa-user"></i>
-          {isSidebarOpen && <span className="nav-text"> Auth</span>}
-        </button>
-      </ShowOnLogout>
-      <ShowOnLogin>
-        <div className={logoClass} onClick={goProfile}>
-          <img
-            className="sidebar-acc-logo"
-            src={user ? user.photo : "https://www.gravatar.com/av"}
-            alt="logo"
-          />
+      <div className="nav flex-column">
+        <div key="logo" className="nav-item">
+          <ShowOnLogout>
+            <button
+              className="anchor-btn"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              <i className="far fa-user"></i>
+              {isSidebarOpen && <span className="nav-text"> Auth</span>}
+            </button>
+          </ShowOnLogout>
+          <ShowOnLogin>
+            <div className={logoClass} onClick={goProfile}>
+              <img
+                className="sidebar-acc-logo"
+                src={user ? user.photo : "https://www.gravatar.com/av"}
+                alt="logo"
+              />
+            </div>
+          </ShowOnLogin>
         </div>
-      </ShowOnLogin>
+      </div>
 
       <ul className="nav flex-row theme-buttons">
         <li key="light" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('light')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("light")}
           >
             <i className="fas fa-sun"></i>
           </button>
         </li>
         <li key="dark" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('dark')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("dark")}
           >
             <i className="fas fa-moon"></i>
           </button>
         </li>
         <li key="rainbow" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('rainbow')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("rainbow")}
           >
             <i className="fas fa-rainbow"></i>
           </button>
         </li>
         <li key="green" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('green')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("green")}
           >
             <i className="fas fa-leaf"></i>
           </button>
         </li>
         <li key="calm" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('calm')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("calm")}
           >
-            <i className = "fas fa-water"></i>
+            <i className="fas fa-water"></i>
           </button>
         </li>
         <li key="purple" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('purple')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("purple")}
           >
-            <i className = "fas fa-dragon"></i>
+            <i className="fas fa-dragon"></i>
           </button>
         </li>
         <li key="orange" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('orange')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("orange")}
           >
-            <i className = "fas fa-fire"></i>
+            <i className="fas fa-fire"></i>
           </button>
         </li>
         <li key="red" className="nav-item">
           <button
-            className="nav-link anchor-btn"
-            onClick={() => handleChangeTheme('red')}
+            className="anchor-btn"
+            onClick={() => handleChangeTheme("red")}
           >
-            <i className = "fas fa-heart"></i>
+            <i className="fas fa-heart"></i>
           </button>
         </li>
       </ul>
@@ -139,7 +151,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           className={`nav-item ${currentTab === "home" ? "active" : ""}`}
         >
           <button
-            className="nav-link anchor-btn"
+            className="anchor-btn"
             onClick={() => onTabChange("home")}
           >
             <i className="fas fa-home"></i>
@@ -151,7 +163,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           className={`nav-item ${currentTab === "posts" ? "active" : ""}`}
         >
           <button
-            className="nav-link anchor-btn"
+            className="anchor-btn"
             onClick={() => onTabChange("posts")}
           >
             <i className="fas fa-tasks"></i>
@@ -163,7 +175,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           className={`nav-item ${currentTab === "blog" ? "active" : ""}`}
         >
           <button
-            className="nav-link anchor-btn"
+            className="anchor-btn"
             onClick={() => onTabChange("blog")}
           >
             <i className="fas fa-blog"></i>
@@ -175,7 +187,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           className={`nav-item ${currentTab === "learn" ? "active" : ""}`}
         >
           <button
-            className="nav-link anchor-btn"
+            className="anchor-btn"
             onClick={() => onTabChange("learn")}
           >
             <i className="fas fa-book"></i>
@@ -187,7 +199,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           className={`nav-item ${currentTab === "about" ? "active" : ""}`}
         >
           <button
-            className="nav-link anchor-btn"
+            className="anchor-btn"
             onClick={() => onTabChange("about")}
           >
             <i className="fas fa-info-circle"></i>
@@ -198,7 +210,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
           <div className="add-section-buttons">
             <li key="addPost" className="nav-item">
               <button
-                className="nav-link anchor-btn"
+                className="anchor-btn"
                 onClick={() => {
                   navigate("/NewProject");
                 }}
@@ -209,7 +221,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
             </li>
             <li key="addBlogPost" className="nav-item">
               <button
-                className="nav-link anchor-btn"
+                className="anchor-btn"
                 onClick={() => {
                   navigate("/NewBlogPost");
                 }}
@@ -222,15 +234,13 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
             </li>
             <li key="addCourse" className="nav-item">
               <button
-                className="nav-link anchor-btn"
+                className="anchor-btn"
                 onClick={() => {
                   navigate("/NewCourse");
                 }}
               >
                 <i className="fas fa-plus"></i>
-                {isSidebarOpen && (
-                  <span className="nav-text"> Add Course</span>
-                )}
+                {isSidebarOpen && <span className="nav-text"> Add Course</span>}
               </button>
             </li>
           </div>
@@ -244,9 +254,7 @@ export const HomeSidebar = ({ onTabChange, currentTab, isSidebarOpen, toggleSide
             SyntaxSeeker.
           </p>
         ) : (
-          <p>
-            &copy; 2023 Syntax Seeker.
-          </p>
+          <p>&copy; 2023 Syntax Seeker.</p>
         )}
       </div>
     </div>

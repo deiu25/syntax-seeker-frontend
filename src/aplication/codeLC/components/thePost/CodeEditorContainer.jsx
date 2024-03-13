@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import SplitPane from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
 
-import { ReactComponent as HtmlIcon } from "../../assets/icons/html.svg";
-import { ReactComponent as CssIcon } from "../../assets/icons/css.svg";
-import { ReactComponent as JsIcon } from "../../assets/icons/js.svg";
+// import { ReactComponent as HtmlIcon } from "../../assets/icons/html.svg";
+// import { ReactComponent as CssIcon } from "../../assets/icons/css.svg";
+// import { ReactComponent as JsIcon } from "../../assets/icons/js.svg";
 
 import { CodeEditorToolbar } from "./CodeEditorToolbar";
-import EditorComponent from "./EditorComponent";
 import { useIframeUrl } from "../../customHooks/useIframeUrl";
+import EditorComponentHorizontal from "../editor-components/editor-component-horizontal/EditorComponentHorizontal";
+import EditorComponentVertical from "../editor-components/editor-component-vertical/EditorComponentVertical";
+
 
 export const CodeEditorContainer = ({
   title,
@@ -18,10 +20,12 @@ export const CodeEditorContainer = ({
   onHtmlChange,
   onCssChange,
   onJsChange,
+  editorLayout,
 }) => {
   const [htmlCode, setHtmlCode] = useState(initialHtml);
   const [cssCode, setCssCode] = useState(initialCss);
   const [jsCode, setJsCode] = useState(initialJs);
+  const [activeLanguage, setActiveLanguage] = useState("html");
 
   const markupUrl = useIframeUrl(htmlCode, cssCode, jsCode);
 
@@ -32,8 +36,7 @@ export const CodeEditorContainer = ({
   }, [markupUrl]);
 
   // Split pane sizes
-  const [horizontalSizes, setHorizontalSizes] = useState(["60%", "40%"]);
-  const [verticalSizes, setVerticalSizes] = useState(["33%", "34%", "33%"]);
+  const [horizontalSizes, setHorizontalSizes] = useState(["50%", "50%"]);
 
   const handleCodeChange = (language, newCode) => {
     if (language === "html") {
@@ -55,44 +58,42 @@ export const CodeEditorContainer = ({
   }, [initialHtml, initialCss, initialJs]);
 
   return (
-    <SplitPane
-      sizes={horizontalSizes}
-      onChange={(sizes) => setHorizontalSizes(sizes)}
-    >
-      <SplitPane
-        split="vertical"
-        sizes={verticalSizes}
-        onChange={(sizes) => setVerticalSizes(sizes)}
-        minsize={50}
-      >
-        <EditorComponent
-          language="html"
-          icon={HtmlIcon}
-          value={htmlCode}
-          onChange={(newCode) => handleCodeChange("html", newCode)}
-        />
-        <EditorComponent
-          language="css"
-          icon={CssIcon}
-          value={cssCode}
-          onChange={(newCode) => handleCodeChange("css", newCode)}
-        />
-        <EditorComponent
-          language="javascript"
-          icon={JsIcon}
-          value={jsCode}
-          onChange={(newCode) => handleCodeChange("js", newCode)}
-        />
-      </SplitPane>
-
-      <div>
-      <CodeEditorToolbar />
-        <div className="output-section">
-        <div>
-          <iframe title={title} src={markupUrl}></iframe>
+    <>
+      {/* <CodeEditorToolbar /> */}
+      {editorLayout === "horizontal" ? (
+        <>
+          <EditorComponentHorizontal
+            language={activeLanguage}
+            value={activeLanguage === "html" ? htmlCode : activeLanguage === "css" ? cssCode : jsCode}
+            onChange={handleCodeChange}
+            setActiveLanguage={setActiveLanguage}
+          />
+          <CodeEditorToolbar />
+          <div className="output-section">
+            <iframe title={title} src={markupUrl}></iframe>
           </div>
-        </div>
-      </div>
-    </SplitPane>
+        </>
+      ) : (
+        <SplitPane
+          sizes={horizontalSizes}
+          onChange={(sizes) => setHorizontalSizes(sizes)}
+        >
+          <EditorComponentVertical
+            language={activeLanguage}
+            value={activeLanguage === "html" ? htmlCode : activeLanguage === "css" ? cssCode : jsCode}
+            onChange={handleCodeChange}
+            setActiveLanguage={setActiveLanguage}
+          />
+          <div>
+            <CodeEditorToolbar />
+            <div className="output-section">
+              <div>
+                <iframe title={title} src={markupUrl}></iframe>
+              </div>
+            </div>
+          </div>
+        </SplitPane>
+      )}
+    </>
   );
 };

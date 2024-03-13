@@ -1,12 +1,14 @@
 //ThePost.jsx
-import "./ThePost.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { PostNavigation } from "../../components/thePost/PostNavigation";
 import { CodeEditorContainer } from "../../components/thePost/CodeEditorContainer";
 import useProjectTitle from "../../customHooks/useProjectTitle";
-import { fetchPostById, updatePost } from "../../../../redux/features/posts/postSlice";
+import {
+  fetchPostById,
+  updatePost,
+} from "../../../../redux/features/posts/postSlice";
 
 export const ThePost = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,23 @@ export const ThePost = () => {
   const { post } = useSelector((state) => state.posts);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [error, setError] = useState("");
+
+  const [editorLayout, setEditorLayout] = useState(
+    window.innerWidth > 768 ? "horizontal" : "vertical"
+  );
+
+  const toggleEditorLayout = () => {
+    setEditorLayout(editorLayout === "horizontal" ? "vertical" : "horizontal");
+  };
+
+  const updateLayoutOnResize = () => {
+    setEditorLayout(window.innerWidth > 768 ? "vertical" : "horizontal");
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateLayoutOnResize);
+    return () => window.removeEventListener("resize", updateLayoutOnResize);
+  }, []);
 
   const {
     title: initialTitle,
@@ -88,27 +107,34 @@ export const ThePost = () => {
   };
 
   return (
-    <div className="container-full">
-      <div className="new-proj-container">
-        <PostNavigation
-          title={title || "Untitled"}
-          isEditingTitle={isEditingTitle}
-          handleTitleEdit={handleTitleEdit}
-          projectTitle={tempTitle}
-          setProjectTitle={setProjectTitle}
-          handleTitleSave={handleTitleSave}
-          handleSavePost={handleSavePost}
-          error={error}
-        />
-        <CodeEditorContainer
-          initialHtml={code.html}
-          initialCss={code.css}
-          initialJs={code.js}
-          onHtmlChange={(value) => updateCode("html", value)}
-          onCssChange={(value) => updateCode("css", value)}
-          onJsChange={(value) => updateCode("js", value)}
-        />
-      </div>
+    <div
+      className={`new-proj-container ${
+        editorLayout === "vertical"
+          ? "new-proj-container-horizontal"
+          : "new-proj-container"
+      }`}
+    >
+      <PostNavigation
+        title={title || "Untitled"}
+        isEditingTitle={isEditingTitle}
+        handleTitleEdit={handleTitleEdit}
+        projectTitle={tempTitle}
+        setProjectTitle={setProjectTitle}
+        handleTitleSave={handleTitleSave}
+        handleSavePost={handleSavePost}
+        error={error}
+        toggleEditorLayout={toggleEditorLayout}
+      />
+      <CodeEditorContainer
+        initialHtml={code.html}
+        initialCss={code.css}
+        initialJs={code.js}
+        onHtmlChange={(value) => updateCode("html", value)}
+        onCssChange={(value) => updateCode("css", value)}
+        onJsChange={(value) => updateCode("js", value)}
+        editorLayout={editorLayout}
+        setEditorLayout={setEditorLayout}
+      />
     </div>
   );
 };
