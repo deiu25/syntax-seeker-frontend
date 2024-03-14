@@ -187,18 +187,16 @@ export const ContentBlock = ({
                 <br></br>
                 <div className="code-card">
                   <div className="code-header">
-                    <div className="code-title">
                       <p className="code-language">{block.language}</p>
+                      <button
+                        onClick={() => copyToClipboard(block.code, index)}
+                        className="copy-button"
+                      >
+                        {isCopied && copiedBlockIndex === index
+                          ? "Copied!"
+                          : "Copy Code"}
+                      </button>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(block.code, index)}
-                      className="copy-button"
-                    >
-                      {isCopied && copiedBlockIndex === index
-                        ? "Copied!"
-                        : "Copy Code"}
-                    </button>
-                  </div>
                   <SyntaxHighlighter
                     language={block.language}
                     className="post-code"
