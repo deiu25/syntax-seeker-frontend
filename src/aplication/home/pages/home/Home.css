@@ -602,6 +602,9 @@
 }
 
 @media (max-width: 768px) {
+  #wrapper #sidebar .copyright {
+    display: none;
+  }
   .container-card {
     max-width: 720px;
   }
