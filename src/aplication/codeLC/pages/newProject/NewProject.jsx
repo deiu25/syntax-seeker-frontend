@@ -15,6 +15,14 @@ export const NewProject = () => {
   const [error, setError] = useState("");
   const [code, setCode] = useState({ html: "", css: "", js: "" });
 
+  const [editorLayout, setEditorLayout] = useState("horizontal");
+  const toggleEditorLayout = () => {
+    setEditorLayout((prevLayout) => {
+      const newLayout = prevLayout === "horizontal" ? "vertical" : "horizontal";
+      return newLayout;
+    });
+  };
+
   const {
     title,
     tempTitle,
@@ -40,14 +48,16 @@ export const NewProject = () => {
       setError(errorMsg);
       return;
     }
-    dispatch(savePost({
-      title: title || "Untitled",
-      content: {
-        htmlCode: code.html,
-        cssCode: code.css,
-        jsCode: code.js,
-      },
-    }));
+    dispatch(
+      savePost({
+        title: title || "Untitled",
+        content: {
+          htmlCode: code.html,
+          cssCode: code.css,
+          jsCode: code.js,
+        },
+      })
+    );
     navigate("/");
   }, [dispatch, navigate, code, title, handleErrors]);
 
@@ -59,25 +69,27 @@ export const NewProject = () => {
   };
 
   return (
-    <div className="container-full">
+    <div className="new-proj-container-wrapper">
+      <PostNavigation
+        title={title || "Untitled"}
+        isEditingTitle={isEditingTitle}
+        handleTitleEdit={handleTitleEdit}
+        projectTitle={tempTitle}
+        setProjectTitle={setProjectTitle}
+        handleTitleSave={handleTitleSave}
+        handleSavePost={handleSavePost}
+        error={error}
+        toggleEditorLayout={toggleEditorLayout}
+      />
       <div className="new-proj-container">
-        <PostNavigation
-          title={title || "Untitled"}
-          isEditingTitle={isEditingTitle}
-          handleTitleEdit={handleTitleEdit}
-          projectTitle={tempTitle}
-          setProjectTitle={setProjectTitle}
-          handleTitleSave={handleTitleSave}
-          handleSavePost={handleSavePost}
-          error={error}
-        />
         <CodeEditorContainer
           code={code}
           setCode={setCode}
           title={title}
-          onHtmlChange={(value) => updateCode('html', value)}
-          onCssChange={(value) => updateCode('css', value)}
-          onJsChange={(value) => updateCode('js', value)}
+          onHtmlChange={(value) => updateCode("html", value)}
+          onCssChange={(value) => updateCode("css", value)}
+          onJsChange={(value) => updateCode("js", value)}
+          layoutDirection={editorLayout}
         />
       </div>
     </div>

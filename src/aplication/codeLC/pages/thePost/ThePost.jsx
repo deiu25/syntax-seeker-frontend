@@ -3,12 +3,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { PostNavigation } from "../../components/thePost/PostNavigation";
-import { CodeEditorContainer } from "../../components/thePost/CodeEditorContainer";
+
 import useProjectTitle from "../../customHooks/useProjectTitle";
 import {
   fetchPostById,
   updatePost,
 } from "../../../../redux/features/posts/postSlice";
+import { CodeEditorContainer } from "../../components/thePost/CodeEditorContainer";
 
 export const ThePost = () => {
   const dispatch = useDispatch();
@@ -18,12 +19,12 @@ export const ThePost = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [error, setError] = useState("");
 
-  const [editorLayout, setEditorLayout] = useState(
-    window.innerWidth > 768 ? "vertical" : "horizontal"
-  );
-
+  const [editorLayout, setEditorLayout] = useState("horizontal");
   const toggleEditorLayout = () => {
-    setEditorLayout(editorLayout === "horizontal" ? "vertical" : "horizontal");
+    setEditorLayout((prevLayout) => {
+      const newLayout = prevLayout === "horizontal" ? "vertical" : "horizontal";
+      return newLayout;
+    });
   };
 
   const {
@@ -98,13 +99,7 @@ export const ThePost = () => {
   };
 
   return (
-    <div
-      className={`new-proj-container ${
-        editorLayout === "vertical"
-          ? "new-proj-container-horizontal"
-          : "new-proj-container"
-      }`}
-    >
+    <div className="new-proj-container-wrapper">
       <PostNavigation
         title={title || "Untitled"}
         isEditingTitle={isEditingTitle}
@@ -116,16 +111,17 @@ export const ThePost = () => {
         error={error}
         toggleEditorLayout={toggleEditorLayout}
       />
-      <CodeEditorContainer
-        initialHtml={code.html}
-        initialCss={code.css}
-        initialJs={code.js}
-        onHtmlChange={(value) => updateCode("html", value)}
-        onCssChange={(value) => updateCode("css", value)}
-        onJsChange={(value) => updateCode("js", value)}
-        editorLayout={editorLayout}
-        setEditorLayout={setEditorLayout}
-      />
+      <div className="new-proj-container">
+        <CodeEditorContainer
+          initialHtml={code.html}
+          initialCss={code.css}
+          initialJs={code.js}
+          onHtmlChange={(value) => updateCode("html", value)}
+          onCssChange={(value) => updateCode("css", value)}
+          onJsChange={(value) => updateCode("js", value)}
+          layoutDirection={editorLayout}
+        />
+      </div>
     </div>
   );
 };

@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import SplitPane from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
 
-// import { ReactComponent as HtmlIcon } from "../../assets/icons/html.svg";
-// import { ReactComponent as CssIcon } from "../../assets/icons/css.svg";
-// import { ReactComponent as JsIcon } from "../../assets/icons/js.svg";
+import { ReactComponent as HtmlIcon } from "../../assets/icons/html.svg";
+import { ReactComponent as CssIcon } from "../../assets/icons/css.svg";
+import { ReactComponent as JsIcon } from "../../assets/icons/js.svg";
 
 import { CodeEditorToolbar } from "./CodeEditorToolbar";
+import EditorComponent from "./EditorComponent";
 import { useIframeUrl } from "../../customHooks/useIframeUrl";
-import EditorComponentHorizontal from "../editor-components/editor-component-horizontal/EditorComponentHorizontal";
-import EditorComponentVertical from "../editor-components/editor-component-vertical/EditorComponentVertical";
-
 
 export const CodeEditorContainer = ({
   title,
@@ -20,23 +18,34 @@ export const CodeEditorContainer = ({
   onHtmlChange,
   onCssChange,
   onJsChange,
-  editorLayout,
+  layoutDirection,
 }) => {
+  const [activeTab, setActiveTab] = useState("html");
   const [htmlCode, setHtmlCode] = useState(initialHtml);
   const [cssCode, setCssCode] = useState(initialCss);
   const [jsCode, setJsCode] = useState(initialJs);
-  const [activeLanguage, setActiveLanguage] = useState("html");
 
   const markupUrl = useIframeUrl(htmlCode, cssCode, jsCode);
 
-  useEffect(() => {
-    return () => {
-      URL.revokeObjectURL(markupUrl);
-    };
-  }, [markupUrl]);
-
   // Split pane sizes
-  const [horizontalSizes, setHorizontalSizes] = useState(["50%", "50%"]);
+  const [sizes, setSizes] = useState(["50%", "50%"]);
+
+  const shouldShowTab = (language) => {
+    switch (language) {
+      case "html":
+        return !!htmlCode.trim();
+      case "css":
+        return !!cssCode.trim();
+      case "javascript":
+        return !!jsCode.trim();
+      default:
+        return false;
+    }
+  };
+
+  const changeTab = (newActiveTab) => {
+    setActiveTab(newActiveTab);
+  };
 
   const handleCodeChange = (language, newCode) => {
     if (language === "html") {
@@ -52,48 +61,78 @@ export const CodeEditorContainer = ({
   };
 
   useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(markupUrl);
+    };
+  }, [markupUrl]);
+
+  useEffect(() => {
     setHtmlCode(initialHtml);
     setCssCode(initialCss);
     setJsCode(initialJs);
   }, [initialHtml, initialCss, initialJs]);
 
+  useEffect(() => {
+    if (layoutDirection === "horizontal") {
+      setSizes(["50%", "50%"]);
+    } else {
+      setSizes(["50%", "50%"]);
+    }
+  }, [layoutDirection]);
+
+  const getActiveEditor = () => {
+    switch (activeTab) {
+      case "html":
+        return (
+          <EditorComponent
+            language="html"
+            icon={HtmlIcon}
+            value={htmlCode}
+            onChange={(newCode) => handleCodeChange("html", newCode)}
+            onTabChange={changeTab}
+            shouldShowTab={shouldShowTab}
+          />
+        );
+      case "css":
+        return (
+          <EditorComponent
+            language="css"
+            icon={CssIcon}
+            value={cssCode}
+            onChange={(newCode) => handleCodeChange("css", newCode)}
+            onTabChange={changeTab}
+            shouldShowTab={shouldShowTab}
+          />
+        );
+      case "js":
+        return (
+          <EditorComponent
+            language="javascript"
+            icon={JsIcon}
+            value={jsCode}
+            onChange={(newCode) => handleCodeChange("js", newCode)}
+            onTabChange={changeTab}
+            shouldShowTab={shouldShowTab}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <>
-      {/* <CodeEditorToolbar /> */}
-      {editorLayout === "horizontal" ? (
-        <>
-          <EditorComponentHorizontal
-            language={activeLanguage}
-            value={activeLanguage === "html" ? htmlCode : activeLanguage === "css" ? cssCode : jsCode}
-            onChange={handleCodeChange}
-            setActiveLanguage={setActiveLanguage}
-          />
-          <CodeEditorToolbar />
-          <div className="output-section">
+    <SplitPane
+      split={layoutDirection}
+      sizes={sizes}
+      onChange={(sizes) => setSizes(sizes)}
+    >
+      {getActiveEditor()}
+      <div>
+      <CodeEditorToolbar layoutDirection={layoutDirection} />
+        <div className={`output-section ${layoutDirection}`}>
             <iframe title={title} src={markupUrl}></iframe>
-          </div>
-        </>
-      ) : (
-        <SplitPane
-          sizes={horizontalSizes}
-          onChange={(sizes) => setHorizontalSizes(sizes)}
-        >
-          <EditorComponentVertical
-            language={activeLanguage}
-            value={activeLanguage === "html" ? htmlCode : activeLanguage === "css" ? cssCode : jsCode}
-            onChange={handleCodeChange}
-            setActiveLanguage={setActiveLanguage}
-          />
-          <div>
-            <CodeEditorToolbar />
-            <div className="output-section">
-              <div>
-                <iframe title={title} src={markupUrl}></iframe>
-              </div>
-            </div>
-          </div>
-        </SplitPane>
-      )}
-    </>
+        </div>
+      </div>
+    </SplitPane>
   );
 };
