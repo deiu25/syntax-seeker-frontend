@@ -1,5 +1,5 @@
 //NewProject.jsx
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./NewProject.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,12 +15,13 @@ export const NewProject = () => {
   const [error, setError] = useState("");
   const [code, setCode] = useState({ html: "", css: "", js: "" });
 
-  const [editorLayout, setEditorLayout] = useState("horizontal");
+  const [editorLayout, setEditorLayout] = useState(
+    window.innerWidth > 768 ? "vertical" : "horizontal"
+  );
   const toggleEditorLayout = () => {
-    setEditorLayout((prevLayout) => {
-      const newLayout = prevLayout === "horizontal" ? "vertical" : "horizontal";
-      return newLayout;
-    });
+    setEditorLayout((prevLayout) =>
+      prevLayout === "horizontal" ? "vertical" : "horizontal"
+    );
   };
 
   const {
@@ -31,6 +32,17 @@ export const NewProject = () => {
     handleTitleEdit,
     handleTitleSave,
   } = useProjectTitle();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newLayout = window.innerWidth > 768 ? "vertical" : "horizontal";
+      setEditorLayout(newLayout);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleErrors = useCallback(() => {
     if (!isLoggedIn) {

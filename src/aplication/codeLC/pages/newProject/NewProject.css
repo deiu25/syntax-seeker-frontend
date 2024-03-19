@@ -326,6 +326,7 @@ iframe {
   align-items: center;
   justify-content: space-between;
   background-color: #282c34;
+  padding: 0 25px;
 }
 
 .output-footer-bar.horizontal {

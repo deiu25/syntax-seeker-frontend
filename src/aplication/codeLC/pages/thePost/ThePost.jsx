@@ -19,13 +19,15 @@ export const ThePost = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [error, setError] = useState("");
 
-  const [editorLayout, setEditorLayout] = useState("horizontal");
+  const [editorLayout, setEditorLayout] = useState(
+    window.innerWidth > 768 ? "vertical" : "horizontal"
+  );
   const toggleEditorLayout = () => {
-    setEditorLayout((prevLayout) => {
-      const newLayout = prevLayout === "horizontal" ? "vertical" : "horizontal";
-      return newLayout;
-    });
+    setEditorLayout((prevLayout) =>
+      prevLayout === "horizontal" ? "vertical" : "horizontal"
+    );
   };
+
 
   const {
     title: initialTitle,
@@ -71,6 +73,17 @@ export const ThePost = () => {
       });
     }
   }, [post]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const newLayout = window.innerWidth > 768 ? "vertical" : "horizontal";
+      setEditorLayout(newLayout);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleSavePost = () => {
     if (!isLoggedIn) {
