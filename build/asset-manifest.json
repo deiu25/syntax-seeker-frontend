@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d836d2f2.css",
-    "main.js": "/static/js/main.1c7a951d.js",
+    "main.css": "/static/css/main.49ef2d1f.css",
+    "main.js": "/static/js/main.2864d4dc.js",
     "static/media/livecodeshowlogo1.png": "/static/media/livecodeshowlogo1.a53c72d6842159492f1a.png",
     "static/media/loader.gif": "/static/media/loader.9d11df4bdd0bb34de773.gif",
     "static/media/add-code-svg.svg": "/static/media/add-code-svg.8a8fd0dba15202ac643cd814703b8cde.svg",
@@ -32,11 +32,11 @@
     "static/media/down.svg": "/static/media/down.09a0dd405c8487b2f841455dd9542848.svg",
     "static/media/arrow-down-svg.svg": "/static/media/arrow-down-svg.5231e780b3e9e3aee38f58c6a2f4ea8d.svg",
     "static/media/arrow-up-svg.svg": "/static/media/arrow-up-svg.2ce4a4a73e8c9d1cca83dbc125bdd631.svg",
-    "main.d836d2f2.css.map": "/static/css/main.d836d2f2.css.map",
-    "main.1c7a951d.js.map": "/static/js/main.1c7a951d.js.map"
+    "main.49ef2d1f.css.map": "/static/css/main.49ef2d1f.css.map",
+    "main.2864d4dc.js.map": "/static/js/main.2864d4dc.js.map"
   },
   "entrypoints": [
-    "static/css/main.d836d2f2.css",
-    "static/js/main.1c7a951d.js"
+    "static/css/main.49ef2d1f.css",
+    "static/js/main.2864d4dc.js"
   ]
 }

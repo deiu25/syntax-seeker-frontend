@@ -21,7 +21,7 @@ export const Home = ({ children }) => {
     };
 
     window.addEventListener('resize', handleResize);
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
